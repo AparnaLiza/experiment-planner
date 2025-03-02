@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 // Configure Google Generative AI
-const GOOGLE_API_KEY: String = process.env.GOOGLE_API_KEY;
-const genai = new GoogleGenerativeAI(GOOGLE_API_KEY);
+//const GOOGLE_API_KEY: String = process.env.GOOGLE_API_KEY;
+const genai = new GoogleGenerativeAI("AIzaSyC5k6WbxmCXeG8i0jIS1LwF0qetQmooZ38");
 
 // Create the model with the same configuration as the FastAPI backend
 const generation_config = {
