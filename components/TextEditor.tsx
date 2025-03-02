@@ -71,45 +71,7 @@ export function TextEditor({ content, onChange }: TextEditorProps) {
     scrollToBottom()
   }, [content, messages])
 
-  const handleSendMessage = async () => {
-    if (!newMessage.trim() || isLoading) return
-
-    const messageToSend = newMessage
-    setIsLoading(true)
-    const userMessage: Message = { role: 'user', content: messageToSend }
-    
-    try {
-      // Add user message to chat
-      setMessages(prev => [...prev, userMessage])
-
-      const response = await fetch('http://localhost:8000/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: messageToSend,
-          history: messages,
-        }),
-      })
-
-      if (!response.ok) throw new Error('Failed to send message')
-
-      const data = await response.json()
-      const assistantMessage: Message = { role: 'assistant', content: data.response }
-      setMessages(prev => [...prev, assistantMessage])
-      
-      // Only clear the input if the request was successful
-      setNewMessage('')
-    } catch (error) {
-      console.error('Error sending message:', error)
-      // Remove the user message if the request failed
-      setMessages(prev => prev.slice(0, -1))
-      alert('Failed to send message. Please try again.')
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  
 
   const handleClearChat = () => {
     if (typeof window !== 'undefined') {
@@ -163,13 +125,13 @@ export function TextEditor({ content, onChange }: TextEditorProps) {
             type="text"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && !isLoading && handleSendMessage()}
+            //onKeyPress={(e) => e.key === 'Enter' && !isLoading && handleSendMessage()}
             placeholder={isLoading ? 'Waiting for response...' : 'Type your message...'}
             className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:bg-gray-50"
             disabled={isLoading}
           />
           <button
-            onClick={handleSendMessage}
+            //onClick={handleSendMessage}
             disabled={isLoading || !newMessage.trim()}
             className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
           >
